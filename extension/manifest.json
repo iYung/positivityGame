@@ -10,8 +10,8 @@
   "content_scripts": [
     {
       "matches": ["*://*.reddit.com/*"],
-      "js": ["main.js"]
+      "js": ["jquery-3.3.1.min.js","main.js"]
     }
-  ]
+  ],
   "description": "Spreading the positivity across the web."
 }
