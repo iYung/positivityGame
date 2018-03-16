@@ -1,1 +1,3 @@
 node_modules
+extension/popup/popup.js
+extension/main.js
