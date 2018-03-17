@@ -9,8 +9,8 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.reddit.com/*"],
-      "js": ["jquery-3.3.1.min.js","main.js"]
+      "matches": ["*://*.reddit.com/*","*://*.youtube.com/*"],
+      "js": ["main.js"]
     }
   ],
   "description": "Spreading the positivity across the web."

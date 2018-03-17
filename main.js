@@ -1,13 +1,20 @@
 const SentimentIntensityAnalyzer = require('vader-sentiment');
-const input = 'VADER is very smart, handsome, and funny';
-const intensity = SentimentIntensityAnalyzer.polarity_scores(input);
-console.log(intensity);
+const webpages = ["www.reddit.com","www.youtube.com"];
+const textBoxes = [];
+
+var webpageIndex = webpages.indexOf(window.location.hostname);
 
 var sentence = "";
 
+console.log(webpageIndex);
+
  document.addEventListener('click',function(e){
     console.log(sentence);
-    if(e.target && e.target.innerHTML == 'save'){
+    console.log(e.target);
+    if(e.target && webpageIndex == 1 && (e.target.innerHTML == 'Comment' || e.target.innerHTML == 'Reply' || e.target.children[0].innerHTML == 'Comment' || e.target.children[0].innerHTML == 'Reply')){
+        console.log(SentimentIntensityAnalyzer.polarity_scores(sentence));
+    }
+    if(e.target && webpageIndex == 0 && e.target.innerHTML == 'save'){
         console.log(SentimentIntensityAnalyzer.polarity_scores(sentence));
     }
 })
