@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "browserify popup.js -o extension/popup/popup.js && browserify main.js -o extension/main.js"
+    "compile": "browserify extension.js -o extension/popup/popup.js && browserify extension.js -o extension/extension.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/iYung/positivityGame#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "browserify": "^16.1.1",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.10",
     "vader-sentiment": "^1.0.0"
   }
 }
