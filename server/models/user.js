@@ -7,7 +7,7 @@ var UserSchema   = new Schema({
     lastModified: { 
         type: Date, 
         default: Date.now,
-        expires: 24*60*60
+        expires: 24*60*60*7
     }
 });
 
