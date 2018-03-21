@@ -10,8 +10,11 @@
   "content_scripts": [
     {
       "matches": ["*://*.reddit.com/*","*://*.youtube.com/*"],
-      "js": ["main.js"]
+      "js": ["extension.js"]
     }
   ],
-  "description": "Spreading the positivity across the web."
+  "description": "Spreading the positivity across the web.",
+  "background": {
+  "scripts": ["background.js"]
+    }
 }
