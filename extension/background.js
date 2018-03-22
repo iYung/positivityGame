@@ -1,7 +1,11 @@
 var val = 0;
 
+var score = localStorage.getItem("positivityScore");
+if (!score) {
+    localStorage.setItem('positivityScore', '0');
+}
+
 setInterval(function()
 {
-    val += 1;
- console.log(val);
+    //upload score
 },30000);
