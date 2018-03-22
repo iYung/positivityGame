@@ -1,10 +1,7 @@
-browser.alarms.create("5min", {
-  delayInMinutes: 0,
-  periodInMinutes: 1
-});
+var val = 0;
 
-broswer.alarms.onAlarm.addListener(function(alarm) {
-  if (alarm.name === "5min") {
-    console.log("yo");
-  }
-});
+setInterval(function()
+{
+    val += 1;
+ console.log(val);
+},30000);
