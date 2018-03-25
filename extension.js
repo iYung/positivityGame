@@ -27,7 +27,7 @@ var sentence = "";
 
 function judgeSentence() {
     //gets sentiment, if positive, increments score
-    var sentiment = SentimentIntensityAnalyzer.polarity_scores(sentence)['compound']);
+    var sentiment = SentimentIntensityAnalyzer.polarity_scores(sentence)['compound'];
     if (sentiment > 0.5) {
         
         var score = localStorage.getItem('postivityGame_positivityScore');
