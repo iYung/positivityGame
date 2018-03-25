@@ -1,10 +1,10 @@
-var val = 0;
-
-var score = localStorage.getItem("positivityScore");
+//sets up score 
+var score = localStorage.getItem("postivityGame_positivityScore");
 if (!score) {
-    localStorage.setItem('positivityScore', '0');
+    localStorage.setItem('postivityGame_positivityScore', '0');
 }
 
+//uploads score every x
 setInterval(function()
 {
     //upload score
