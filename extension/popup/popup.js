@@ -52,5 +52,4 @@ function onLoginSuccessful() {
     buttons.parentNode.removeChild(buttons);
     document.getElementById("userName").innerHTML = localStorage.getItem("postivityGame_username");
     document.getElementById("userScore").innerHTML = score;
-    document.getElementById("userId").innerHTML = localStorage.getItem("postivityGame_userID");
 }

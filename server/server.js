@@ -5,3 +5,5 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
 var User = require('./models/user');
+var config = require('./config');
+
