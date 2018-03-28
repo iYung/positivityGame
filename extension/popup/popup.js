@@ -11,7 +11,6 @@ if (loginSuccess) {
     onLoginSuccessful();
 } else {
     document.getElementById("newUserButton").addEventListener("click",userCreate);
-    document.getElementById("loginButton").addEventListener("click",login);
 }
 
 function userCreate() {
@@ -28,23 +27,6 @@ function userCreate() {
             setTimeout(waitForLocalStorage, 10);
          }
     })();
-}
-
-function login() {
-    var inputId = prompt("Enter your id below:");
-    //poll server
-    //localStorage.setItem("postivityGame_positivityScore", response.score);
-    //localStorage.setItem("postivityGame_username", response.name);
-    //localStorage.setItem("postivityGame_userID", response._id);
-    /*
-    (function waitForLocalStorage(){
-         if (localStorage.getItem("postivityGame_username") === response.name) {
-            onLoginSuccessful();
-         } else {
-            setTimeout(waitForLocalStorage, 10);
-         }
-    })();
-    */
 }
 
 function onLoginSuccessful() {
