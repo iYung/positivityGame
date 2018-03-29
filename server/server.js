@@ -86,8 +86,20 @@ router.route('/update')
                 return res.send(err);
             if (user != null) {
                 //update score
+                user.score = req.body.score;
+                user.save(function(err) {
+                    if (err)
+                        return res.send(err);
+                    return res.json({ message: 'New user data saved!', success: true });
+                });
             } else {
                 //user not found
+                return res.json({ message: 'User was not found!', success: false });
             }
         });
 });
+
+app.use('/api', router);
+
+app.listen(app.get("port"));
+console.log('Magic happens on port ' + app.get("port"));
