@@ -50,3 +50,44 @@ router.route('/rank')
             }
         });
 });
+//create user
+router.route('/create')
+    .post(function(req, res) {
+        //check cache
+        User.findOne({
+            _id: req.body.id
+        },function(err, user) {
+            if (err)
+                return res.send(err);
+            if (user != null) {
+                //user found
+                return res.json({ message: 'User was already found!', success: false });
+            } else {
+                //create user
+                var newUser = new User();
+                newUser.name = req.body.username;
+                newUser.points = 0;
+                newUser.save(function(err,createdUser) {
+                        if (err)
+                            return res.send(err);
+                        return res.json({ userId: createdUser.id, success: true });
+                });
+            }
+        });
+});
+//update score
+router.route('/update')
+    .post(function(req, res) {
+        //check cache
+        User.findOne({
+            _id: req.body.id
+        },function(err, user) {
+            if (err)
+                return res.send(err);
+            if (user != null) {
+                //update score
+            } else {
+                //user not found
+            }
+        });
+});
