@@ -37,16 +37,11 @@ var router = express.Router();
 router.route('/rank')
     .post(function(req, res) {
         //check cache
-        User.findOne({
-            _id: req.body.id
-        },function(err, user) {
+        User.find({ score: { $gt: req.body.score }, function (err, users) {
             if (err)
                 return res.send(err);
-            if (user != null) {
-                //send ranking
-                //save in cache
-            } else {
-                //user not found
+            //update cache
+            return res.json({ rank: users.length + 1 });
             }
         });
 });
