@@ -7,7 +7,7 @@ var redis = require("redis")
 var User = require('./models/user');
 var config = require('./config');
 
-mongoose.connect(config.database,{useMongoClient: true});
+mongoose.connect(config.database);
 
 //port setup
 var port;
@@ -37,13 +37,13 @@ var router = express.Router();
 router.route('/rank')
     .post(function(req, res) {
         //check cache
-        User.find({ score: { $gt: req.body.score }, function (err, users) {
+        User.find({ points:  {$gt: req.body.score} }, function (err, users) {
             if (err)
                 return res.send(err);
             //update cache
             return res.json({ rank: users.length + 1 });
             }
-        });
+        );
 });
 //create user
 router.route('/create')
