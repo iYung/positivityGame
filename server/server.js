@@ -73,7 +73,6 @@ router.route('/create')
 //update score
 router.route('/update')
     .post(function(req, res) {
-        //check cache
         User.findOne({
             _id: req.body.id
         },function(err, user) {
@@ -84,8 +83,16 @@ router.route('/update')
                 user.score = req.body.score;
                 user.save(function(err) {
                     if (err)
-                        return res.send(err);
-                    return res.json({ message: 'New user data saved!', success: true });
+                        return res.send(err);                   
+                    //get rank
+                    //check cache
+                    User.find({ points:  {$gt: req.body.score} }, function (err, users) {
+                        if (err)
+                            return res.send(err);
+                        //update cache
+                        return res.json({ rank: users.length + 1, success: false });
+                        }
+                    );
                 });
             } else {
                 //user not found
