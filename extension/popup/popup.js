@@ -1,13 +1,9 @@
 var score = localStorage.getItem("postivityGame_positivityScore");
 var user = localStorage.getItem("postivityGame_username");
 var id = localStorage.getItem("postivityGame_userID");
-var loginSuccess = false;
+var rank = localStorage.getItem("postivityGame_userRank");
 
-//if user already logged in, remove buttons
-if (id){
-    //if true, loginSuccess = true
-}
-if (loginSuccess) {
+if (id) {
     onLoginSuccessful();
 } else {
     document.getElementById("newUserButton").addEventListener("click",userCreate);

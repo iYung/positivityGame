@@ -80,7 +80,7 @@ router.route('/update')
                 return res.send(err);
             if (user != null) {
                 //update score
-                user.score = req.body.score;
+                user.points = req.body.score;
                 user.save(function(err) {
                     if (err)
                         return res.send(err);                   

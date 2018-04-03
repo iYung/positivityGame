@@ -2,8 +2,9 @@
 setInterval(function()
 {
     var score = localStorage.getItem("postivityGame_positivityScore");
+    var id = localStorage.getItem("postivityGame_userID");
     //upload score
-    if (score) {
+    if (score && id) {
         var xhr = new XMLHttpRequest();
         xhr.open("POST", 'https://positivity-game-iyung.c9users.io/api/update', true);
 
@@ -13,9 +14,13 @@ setInterval(function()
         xhr.onreadystatechange = function() {//Call a function when the state changes.
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                 // Request finished. Do processing here.
-                console.log("Uploaded score!");
+                var response = JSON.parse(xhr.response);
+                console.log(response);
+                if (response.success) {
+                    localStorage.setItem("postivityGame_userRank", response.rank);
+                }
             }
         }
-        xhr.send({ score: score });
+        xhr.send({ score: score, id: id });
     }
 },30000);
