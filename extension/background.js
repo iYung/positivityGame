@@ -14,6 +14,7 @@ setInterval(function()
         xhr.onreadystatechange = function() {//Call a function when the state changes.
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                 // Request finished. Do processing here.
+                console.log(xhr.response);
                 var response = JSON.parse(xhr.response);
                 console.log(response);
                 if (response.success) {
@@ -21,6 +22,7 @@ setInterval(function()
                 }
             }
         }
-        xhr.send({ score: score, id: id });
+        var data = JSON.stringify({ "score": score, "id": id});
+        xhr.send(data);
     }
-},30000);
+},5000);

@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Coantrol-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
   console.log('req made');
   next();
 });
@@ -48,9 +48,9 @@ router.route('/create')
 //update score
 router.route('/update')
     .post(function(req, res) {
-        User.findOne({
-            _id: req.body.id
-        },function(err, user) {
+        User.findById(
+            req.body.id
+            ,function(err, user) {
             if (err)
                 return res.send(err);
             if (user != null) {
@@ -61,7 +61,7 @@ router.route('/update')
                         return res.send(err);                   
                     //get rank
                     //check cache
-                    User.find({ points:  {$gt: req.body.score} }, function (err, users) {
+                    User.find({ points:  {$gt: parseInt(req.body.score)} }, function (err, users) {
                         if (err)
                             return res.send(err);
                         //update cache
