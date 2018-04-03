@@ -33,18 +33,6 @@ var router = express.Router();
 
 ////Unauthenticated routes
 //------------------------------------------------------------------------------
-//get ranking
-router.route('/rank')
-    .post(function(req, res) {
-        //check cache
-        User.find({ points:  {$gt: req.body.score} }, function (err, users) {
-            if (err)
-                return res.send(err);
-            //update cache
-            return res.json({ rank: users.length + 1 });
-            }
-        );
-});
 //create user
 router.route('/create')
     .post(function(req, res) {
