@@ -22,10 +22,10 @@ function userCreate() {
         xhr.onreadystatechange = function() {//Call a function when the state changes.
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                 var response = JSON.parse(xhr.response);
-                console.log(response);
+                alert(response);
                 localStorage.setItem("postivityGame_positivityScore", "0");
                 localStorage.setItem("postivityGame_username", newUser);
-                localStorage.setItem("postivityGame_userID", "adadaada23523");
+                localStorage.setItem("postivityGame_userID", response.userId);
                 localStorage.setItem("postivityGame_userRank", "No rank yet");
                 //waits for local storage to update variables before updating the popup with user info
                 (function waitForLocalStorage(){

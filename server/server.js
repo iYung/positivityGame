@@ -65,7 +65,7 @@ router.route('/update')
                         if (err)
                             return res.send(err);
                         //update cache
-                        return res.json({ rank: users.length + 1, success: false });
+                        return res.json({ rank: users.length + 1, success: true });
                         }
                     );
                 });
