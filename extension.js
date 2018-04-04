@@ -29,12 +29,13 @@ function judgeSentence() {
     //gets sentiment, if positive, increments score
     var sentiment = SentimentIntensityAnalyzer.polarity_scores(sentence)['compound'];
     if (sentiment > 0.5) {
-        
-        var score = localStorage.getItem('postivityGame_positivityScore');
-        if (score != null) {
-            var parsedScore = parseInt(score) + 1;
-            localStorage.setItem(score.toString());
-        }
+        var userData =  browser.storage.local.get("postivityGameData", data => {
+            console.log(data.postivityGameData);
+            if (data.postivityGameData.id) {
+                data.postivityGameData.score += 1;
+                browser.storage.local.set({ postivityGameData: data.postivityGameData });
+            }
+        });
     }
     //reset tracked sentence
     sentence = "";

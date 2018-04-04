@@ -1,15 +1,15 @@
-var score = localStorage.getItem("postivityGame_positivityScore");
-var user = localStorage.getItem("postivityGame_username");
-var id = localStorage.getItem("postivityGame_userID");
-var rank = localStorage.getItem("postivityGame_userRank");
-
 document.getElementById("resetButton").addEventListener("click",resetData);
 
-if (id) {
-    onLoginSuccessful();
-} else {
-    document.getElementById("newUserButton").addEventListener("click",userCreate);   
-}
+console.log("loaded");
+
+var userData =  browser.storage.local.get("postivityGameData", data => {
+    console.log(data.postivityGameData);
+    if (data.postivityGameData) {
+        onLoginSuccessful();
+    } else {
+        document.getElementById("newUserButton").addEventListener("click",userCreate);   
+    }
+});
 
 function userCreate() {
     var newUser = prompt("Enter your desired username below:");
@@ -23,18 +23,8 @@ function userCreate() {
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                 var response = JSON.parse(xhr.response);
                 alert(response);
-                localStorage.setItem("postivityGame_positivityScore", "0");
-                localStorage.setItem("postivityGame_username", newUser);
-                localStorage.setItem("postivityGame_userID", response.userId);
-                localStorage.setItem("postivityGame_userRank", "No rank yet");
-                //waits for local storage to update variables before updating the popup with user info
-                (function waitForLocalStorage(){
-                     if (localStorage.getItem("postivityGame_username") === newUser) {
-                        onLoginSuccessful();
-                     } else {
-                        setTimeout(waitForLocalStorage, 10);
-                     }
-                })();
+                var postivityGameData = {score: 0, username: newUser, id: response.userId, rank: "No rank yet"};
+                browser.storage.local.set({ postivityGameData }).then(onLoginSuccessful);              
             }
         }
     var data = JSON.stringify({"username": newUser});
@@ -42,16 +32,16 @@ function userCreate() {
 }
 
 function resetData(){
-    localStorage.removeItem("postivityGame_positivityScore");
-    localStorage.removeItem("postivityGame_username");
-    localStorage.removeItem("postivityGame_userID");
-    localStorage.removeItem("postivityGame_userRank");
+    alert("data reset!");
+    browser.storage.local.clear();
 }
 
 function onLoginSuccessful() {
     var buttons = document.getElementById("buttons");
     buttons.parentNode.removeChild(buttons);
-    document.getElementById("userName").innerHTML = localStorage.getItem("postivityGame_username");
-    document.getElementById("userScore").innerHTML = score;
-    document.getElementById("userRank").innerHTML = rank;
+    browser.storage.local.get("postivityGameData", newData => {
+        document.getElementById("userName").innerHTML = newData.postivityGameData.username;
+        document.getElementById("userScore").innerHTML = newData.postivityGameData.score;
+        document.getElementById("userRank").innerHTML = newData.postivityGameData.rank;
+    });
 }

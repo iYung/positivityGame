@@ -13,6 +13,7 @@
       "js": ["extension.js"]
     }
   ],
+  "permissions": ["storage"],
   "description": "Spreading the positivity across the web.",
   "background": {
   "scripts": ["background.js"]
