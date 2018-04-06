@@ -48,27 +48,33 @@ router.route('/create')
 //update score
 router.route('/update')
     .post(function(req, res) {
+        //find current user to update score
         User.findById(
             req.body.id
             ,function(err, user) {
-            if (err)
-                return res.send(err);
-            if (user != null) {
-                //update score
-                user.points = req.body.score;
-                user.save(function(err) {
-                    if (err)
-                        return res.send(err);                   
-                    //get rank
-                    //check cache
-                    User.find({ points:  {$gt: parseInt(req.body.score)} }, function (err, users) {
+                if (err)
+                    return res.send(err);
+                if (user != null) {
+                    //update score
+                    user.points = req.body.score;
+                    user.save(function(err) {
                         if (err)
-                            return res.send(err);
-                        //update cache
-                        return res.json({ rank: users.length + 1, success: true });
-                        }
-                    );
-                });
+                            return res.send(err);                   
+                        //get top 5
+                        User.find({}, 'points name', {limit: 5, sort: { points: -1 }}, function (err, top5){
+                            if (err)
+                                return res.send(err);
+                            //get user rank
+                            User.find({ points:  {$gt: parseInt(req.body.score)} }, 'points', function (err, users) {
+                                if (err)
+                                    return res.send(err);
+                                var data = { rank: users.length + 1, success: true, top5: top5 };
+                                console.log(data);
+                                return res.json(data);
+                            });
+                        });
+                        
+                    });
             } else {
                 //user not found
                 return res.json({ message: 'User was not found!', success: false });
