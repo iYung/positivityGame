@@ -88,7 +88,8 @@ router.route('/top5')
         User.find({}, 'points name', {limit: 5, sort: { points: -1 }}, function (err, top5){
             if (err)
                 return res.send(err);
-            return res.json(top5);
+            var data = { top5: top5, success: true };
+            return res.json(data);
         });
 });
 
