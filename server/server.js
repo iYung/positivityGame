@@ -82,6 +82,16 @@ router.route('/update')
         });
 });
 
+router.route('/top5')
+    .get(function(req, res) {
+        //returns top5 to user that is not logged in
+        User.find({}, 'points name', {limit: 5, sort: { points: -1 }}, function (err, top5){
+            if (err)
+                return res.send(err);
+            return res.json(top5);
+        });
+});
+
 app.use('/api', router);
 
 app.listen(app.get("port"));
