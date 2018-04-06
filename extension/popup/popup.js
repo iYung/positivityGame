@@ -1,6 +1,6 @@
 document.getElementById("resetButton").addEventListener("click",resetData);
 
-var userData =  browser.storage.local.get("postivityGameData", data => {
+browser.storage.local.get("postivityGameData", data => {
     console.log(data.postivityGameData);
     if (data.postivityGameData) {
         onLoginSuccessful();
@@ -8,6 +8,13 @@ var userData =  browser.storage.local.get("postivityGameData", data => {
         document.getElementById("newUserButton").addEventListener("click",userCreate);   
     }
 });
+
+browser.storage.local.get("postivityGameTopUsers", data => {
+    if (data.postivityGameTopUsers) {
+        console.log(data);
+    }
+});
+
 
 function userCreate() {
     var newUser = prompt("Enter your desired username below:");
