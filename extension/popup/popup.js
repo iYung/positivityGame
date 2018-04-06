@@ -1,7 +1,5 @@
 document.getElementById("resetButton").addEventListener("click",resetData);
 
-console.log("loaded");
-
 var userData =  browser.storage.local.get("postivityGameData", data => {
     console.log(data.postivityGameData);
     if (data.postivityGameData) {
@@ -13,6 +11,9 @@ var userData =  browser.storage.local.get("postivityGameData", data => {
 
 function userCreate() {
     var newUser = prompt("Enter your desired username below:");
+    if (newUser == null || newUser == "") {
+        return;
+    }
     var xhr = new XMLHttpRequest();
         xhr.open("POST", 'https://positivity-game-iyung.c9users.io/api/create', true);
 
@@ -22,7 +23,6 @@ function userCreate() {
         xhr.onreadystatechange = function() {//Call a function when the state changes.
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                 var response = JSON.parse(xhr.response);
-                alert(response);
                 var postivityGameData = {score: 0, username: newUser, id: response.userId, rank: "No rank yet"};
                 browser.storage.local.set({ postivityGameData }).then(onLoginSuccessful);              
             }
@@ -32,7 +32,6 @@ function userCreate() {
 }
 
 function resetData(){
-    alert("data reset!");
     browser.storage.local.clear();
 }
 
