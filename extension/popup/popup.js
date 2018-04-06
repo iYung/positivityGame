@@ -11,7 +11,24 @@ browser.storage.local.get("postivityGameData", data => {
 
 browser.storage.local.get("postivityGameTopUsers", data => {
     if (data.postivityGameTopUsers) {
-        console.log(data);
+        console.log(data.postivityGameTopUsers);
+        var table = document.getElementById("highScores");
+        while (table.firstChild) {
+            table.removeChild(table.firstChild);
+        }
+        data.postivityGameTopUsers.forEach( function(user, index) {
+            var newRow = document.createElement("tr");
+            var rankCell = document.createElement("td");
+            rankCell.innerHTML = index + 1;
+            newRow.appendChild(rankCell);
+            var nameCell = document.createElement("td");
+            nameCell.innerHTML = user['name'];
+            newRow.appendChild(nameCell);
+            var pointCell = document.createElement("td");
+            pointCell.innerHTML = user['points'];
+            newRow.appendChild(pointCell);
+            table.appendChild(newRow);
+        });
     }
 });
 

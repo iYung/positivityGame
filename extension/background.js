@@ -41,7 +41,7 @@ setInterval(function()
                     var response = JSON.parse(xhr.response);
                     console.log(response);
                     if (response.success) {
-                        browser.storage.local.set({ postivityGameTopUsers: response });
+                        browser.storage.local.set({ postivityGameTopUsers: response.top5 });
                     }
                 }
             }
