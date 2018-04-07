@@ -26,13 +26,21 @@ var sentence = "";
 })
 
 function judgeSentence() {
-    //gets sentiment, if positive, increments score
+    //gets sentiment, +/- 1 to score if positive/negative
     var sentiment = SentimentIntensityAnalyzer.polarity_scores(sentence)['compound'];
     if (sentiment > 0.5) {
         var userData =  browser.storage.local.get("postivityGameData", data => {
             console.log(data.postivityGameData);
             if (data.postivityGameData.id) {
                 data.postivityGameData.score += 1;
+                browser.storage.local.set({ postivityGameData: data.postivityGameData });
+            }
+        });
+    } else if (sentiment < -0.5) {
+        var userData =  browser.storage.local.get("postivityGameData", data => {
+            console.log(data.postivityGameData);
+            if (data.postivityGameData.id) {
+                data.postivityGameData.score += -1;
                 browser.storage.local.set({ postivityGameData: data.postivityGameData });
             }
         });
