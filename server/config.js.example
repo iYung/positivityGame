@@ -2,5 +2,8 @@ module.exports = {
     'secret': '53CR3T_P455W0RD_G035_H3R3',
     'database': 'mongodb://your:info@your.mongo.db:goes/here',
     'saltRounds': 10,
-    'serverPort': 3000
+    'serverPort': 3000,
+    'redisPort': 12345,
+    'redisHost': 'redis-host.redislabs.com',
+    'redisPass': 'R3411Y_53CuR3_p4s5W0Rd'
 };

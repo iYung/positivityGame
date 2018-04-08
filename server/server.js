@@ -2,10 +2,19 @@ var express    = require('express');
 var app        = express();                 
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var redis = require("redis")
+var redis = require("redis");
 
 var User = require('./models/user');
 var config = require('./config');
+
+//redis setup
+var client = redis.createClient(config.redisPort, config.redisHost, {no_ready_check: true});
+client.auth(config.redisPass, function (err) {
+    if (err) throw err;
+});
+client.on('connect', function() {
+    console.log('Connected to Redis');
+});
 
 mongoose.connect(config.database);
 
@@ -61,19 +70,55 @@ router.route('/update')
                         if (err)
                             return res.send(err);                   
                         //get top 5
-                        User.find({}, 'points name', {limit: 5, sort: { points: -1 }}, function (err, top5){
-                            if (err)
-                                return res.send(err);
-                            //get user rank
-                            User.find({ points:  {$gt: parseInt(req.body.score)} }, 'points', function (err, users) {
-                                if (err)
-                                    return res.send(err);
-                                var data = { rank: users.length + 1, success: true, top5: top5 };
-                                console.log(data);
-                                return res.json(data);
-                            });
+                        client.get('top5', function (err, cachedTop5) {
+                            if (cachedTop5) {
+                                var top5 = JSON.parse(cachedTop5);
+                                client.get(req.body.score, function (err, rank) {
+                                    if (rank) {
+                                        var data = { rank: rank, success: true, top5: top5 };
+                                        console.log(data);
+                                        return res.json(data);
+                                    } else {
+                                        //get user rank
+                                        User.find({ points:  {$gt: parseInt(req.body.score)} }, 'points', function (err, users) {
+                                            if (err)
+                                                return res.send(err);
+                                            //update cache
+                                            client.set(req.body.score, users.length + 1, 'EX', 600);
+                                            var data = { rank: users.length + 1, success: true, top5: top5 };
+                                            console.log(data);
+                                            return res.json(data);
+                                        });
+                                    }
+                                });
+                            } else {
+                                User.find({}, 'points name', {limit: 5, sort: { points: -1 }}, function (err, top5){
+                                    if (err)
+                                        return res.send(err);
+                                    //update cache
+                                    client.set('top5', JSON.stringify(top5), 'EX', 600);
+                                    //get user rank
+                                    client.get(req.body.score, function (err, rank) {
+                                        if (rank) {
+                                            var data = { rank: rank, success: true, top5: top5 };
+                                            console.log(data);
+                                            return res.json(data);
+                                        } else {
+                                            //get user rank
+                                            User.find({ points:  {$gt: parseInt(req.body.score)} }, 'points', function (err, users) {
+                                                if (err)
+                                                    return res.send(err);
+                                                //update cache
+                                                client.set(req.body.score, users.length + 1, 'EX', 600);
+                                                var data = { rank: users.length + 1, success: true, top5: top5 };
+                                                console.log(data);
+                                                return res.json(data);
+                                            });
+                                        }
+                                    });
+                                });
+                            }
                         });
-                        
                     });
             } else {
                 //user not found
