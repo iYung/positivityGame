@@ -5,26 +5,28 @@ var mongoose = require('mongoose');
 var redis = require("redis");
 
 var User = require('./models/user');
-var config = require('./config');
+
+//prod vs dev setup
+var port;
+if (process.env.NODE_ENV === 'production') {
+    port = process.env.PORT || process.env.SERVER_PORT;
+} else {
+    var result = require('dotenv').config();
+    console.log(result.parsed);
+    console.log(process.env.SERVER_PORT);
+    port = process.env.SERVER_PORT;
+}
 
 //redis setup
-var client = redis.createClient(config.redisPort, config.redisHost, {no_ready_check: true});
-client.auth(config.redisPass, function (err) {
+var client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL, {no_ready_check: true});
+client.auth(process.env.REDIS_PASS, function (err) {
     if (err) throw err;
 });
 client.on('connect', function() {
     console.log('Connected to Redis');
 });
 
-mongoose.connect(config.database);
-
-//port setup
-var port;
-if (process.env.NODE_ENV === 'production') {
-    port = process.env.PORT || config.serverPort;
-} else {
-    port = config.serverPort;
-}
+mongoose.connect(process.env.DB_LINK);
 
 app.set("port", port);
 //allow CORS
