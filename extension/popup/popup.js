@@ -1,5 +1,3 @@
-document.getElementById("resetButton").addEventListener("click",resetData);
-
 browser.storage.local.get("postivityGameData", data => {
     console.log(data.postivityGameData);
     if (data.postivityGameData) {
@@ -53,10 +51,6 @@ function userCreate() {
         }
     var data = JSON.stringify({"username": newUser});
     xhr.send(data);
-}
-
-function resetData(){
-    browser.storage.local.clear();
 }
 
 function onLoginSuccessful() {
