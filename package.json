@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "browserify extension.js -o extension/extension.js"
+    "compile": "browserify extension.js -o extension/extension.js",
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
