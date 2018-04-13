@@ -32,6 +32,7 @@ function judgeSentence() {
         var userData =  browser.storage.local.get("postivityGameData", data => {
             console.log(data.postivityGameData);
             if (data.postivityGameData.id) {
+                browser.runtime.sendMessage({postivitygame: true, txt: "What a nice comment! +1"});
                 data.postivityGameData.score += 1;
                 browser.storage.local.set({ postivityGameData: data.postivityGameData });
             }
@@ -40,6 +41,7 @@ function judgeSentence() {
         var userData =  browser.storage.local.get("postivityGameData", data => {
             console.log(data.postivityGameData);
             if (data.postivityGameData.id) {
+                browser.runtime.sendMessage({postivitygame: true, txt: "What a rude comment! -1"});
                 data.postivityGameData.score += -1;
                 browser.storage.local.set({ postivityGameData: data.postivityGameData });
             }

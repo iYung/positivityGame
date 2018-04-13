@@ -1,3 +1,18 @@
+browser.runtime.onMessage.addListener(notify);
+
+function notify(message) {
+    if (message.postivitygame) {
+        var popup = browser.notifications.create("postivityGame",{
+            "type": "basic",
+            "title": "The Positivity Game",
+            "message": message.txt
+        });
+        popup.then(()=>{
+            setTimeout(function(){chrome.notifications.clear("postivityGame");}, 2000);
+        });
+    }
+}
+
 //uploads score every x
 setInterval(function()
 {
@@ -49,4 +64,4 @@ setInterval(function()
         }
     
     });
-},15 * 60 * 1000);
+}, 1 * 60 * 1000);
