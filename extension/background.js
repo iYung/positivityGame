@@ -6,7 +6,7 @@ setInterval(function()
         //upload score
         if (data.postivityGameData) {
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", 'https://positivitygame.herokuapp.com/api/update', true);
+            xhr.open("POST", 'http://postivitygame.us-east-1.elasticbeanstalk.com/api/update', true);
 
             //Send the proper header information along with the request
             xhr.setRequestHeader("Content-type", "application/json");
@@ -29,7 +29,7 @@ setInterval(function()
             xhr.send(data);
         } else {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", 'https://positivitygame.herokuapp.com/api/top5', true);
+            xhr.open("GET", 'http://postivitygame.us-east-1.elasticbeanstalk.com/api/top5', true);
 
             //Send the proper header information along with the request
             xhr.setRequestHeader("Content-type", "application/json");

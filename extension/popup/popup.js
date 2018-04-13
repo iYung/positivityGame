@@ -37,7 +37,7 @@ function userCreate() {
         return;
     }
     var xhr = new XMLHttpRequest();
-        xhr.open("POST", 'https://positivitygame.herokuapp.com/api/create', true);
+        xhr.open("POST", 'http://postivitygame.us-east-1.elasticbeanstalk.com/api/create', true);
 
         //Send the proper header information along with the request
         xhr.setRequestHeader("Content-type", "application/json");
