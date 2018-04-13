@@ -13,6 +13,30 @@ function notify(message) {
     }
 }
 
+//sets up top5 the first time
+browser.storage.local.get("postivityGameTopUsers", data => {
+    if (!data.postivityGameTopUsers) {
+        var xhr = new XMLHttpRequest();
+            xhr.open("GET", 'http://postivitygame.us-east-1.elasticbeanstalk.com/api/top5', true);
+
+            //Send the proper header information along with the request
+            xhr.setRequestHeader("Content-type", "application/json");
+
+            xhr.onreadystatechange = function() {//Call a function when the state changes.
+                if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    // Request finished. Do processing here.
+                    console.log(xhr.response);
+                    var response = JSON.parse(xhr.response);
+                    console.log(response);
+                    if (response.success) {
+                        browser.storage.local.set({ postivityGameTopUsers: response.top5 });
+                    }
+                }
+            }
+        xhr.send();
+    }
+});
+
 //uploads score every x
 setInterval(function()
 {
