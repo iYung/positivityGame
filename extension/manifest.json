@@ -10,7 +10,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.reddit.com/*","*://*.youtube.com/*"],
-      "js": ["extension.js"]
+      "js": ["content.js"]
     }
   ],
   "icons": {
