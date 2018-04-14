@@ -25,9 +25,7 @@ browser.storage.local.get("postivityGameTopUsers", data => {
             xhr.onreadystatechange = function() {//Call a function when the state changes.
                 if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                     // Request finished. Do processing here.
-                    console.log(xhr.response);
                     var response = JSON.parse(xhr.response);
-                    console.log(response);
                     if (response.success) {
                         browser.storage.local.set({ postivityGameTopUsers: response.top5 });
                     }
@@ -53,11 +51,8 @@ setInterval(function()
             xhr.onreadystatechange = function() {//Call a function when the state changes.
                 if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                     // Request finished. Do processing here.
-                    console.log(xhr.response);
                     var response = JSON.parse(xhr.response);
-                    console.log(response);
                     if (response.success) {
-                        console.log(userData);
                         userData.rank = response.rank;
                         browser.storage.local.set({ postivityGameData: userData });
                         browser.storage.local.set({ postivityGameTopUsers: response.top5 });
@@ -76,9 +71,7 @@ setInterval(function()
             xhr.onreadystatechange = function() {//Call a function when the state changes.
                 if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                     // Request finished. Do processing here.
-                    console.log(xhr.response);
                     var response = JSON.parse(xhr.response);
-                    console.log(response);
                     if (response.success) {
                         browser.storage.local.set({ postivityGameTopUsers: response.top5 });
                     }
@@ -88,4 +81,4 @@ setInterval(function()
         }
     
     });
-}, 1 * 60 * 1000);
+}, 5 * 60 * 1000);

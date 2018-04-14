@@ -1,5 +1,4 @@
 browser.storage.local.get("postivityGameData", data => {
-    console.log(data.postivityGameData);
     if (data.postivityGameData) {
         onLoginSuccessful();
     } else {
@@ -9,7 +8,6 @@ browser.storage.local.get("postivityGameData", data => {
 
 browser.storage.local.get("postivityGameTopUsers", data => {
     if (data.postivityGameTopUsers) {
-        console.log(data.postivityGameTopUsers);
         var table = document.getElementById("highScores");
         while (table.firstChild) {
             table.removeChild(table.firstChild);

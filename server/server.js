@@ -86,7 +86,7 @@ router.route('/update')
                                             if (err)
                                                 return res.send(err);
                                             //update cache
-                                            client.set(req.body.score, users.length + 1, 'EX', 600);
+                                            client.set(req.body.score, users.length + 1, 'EX', 300);
                                             var data = { rank: users.length + 1, success: true, top5: top5 };
                                             console.log(data);
                                             return res.json(data);
@@ -98,7 +98,7 @@ router.route('/update')
                                     if (err)
                                         return res.send(err);
                                     //update cache
-                                    client.set('top5', JSON.stringify(top5), 'EX', 600);
+                                    client.set('top5', JSON.stringify(top5), 'EX', 300);
                                     //get user rank
                                     client.get(req.body.score, function (err, rank) {
                                         if (rank) {
@@ -111,7 +111,7 @@ router.route('/update')
                                                 if (err)
                                                     return res.send(err);
                                                 //update cache
-                                                client.set(req.body.score, users.length + 1, 'EX', 600);
+                                                client.set(req.body.score, users.length + 1, 'EX', 300);
                                                 var data = { rank: users.length + 1, success: true, top5: top5 };
                                                 console.log(data);
                                                 return res.json(data);
